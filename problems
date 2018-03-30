@@ -5,3 +5,12 @@ def toInt(s: String) :Option[Int] ={
       } catch {
       case e: Exception => None    }
 }
+
+# list containing of strings
+val bag = List("1","2","foo","3","bar")
+bag.map(toInt).foreach(println)
+
+#o/p->Some(1)Some(2)NoneSome(3)None
+
+#by using flatMap, we get flattened results by eliminating the Null(None) values
+#o/p-> 123
