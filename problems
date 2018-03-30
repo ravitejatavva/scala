@@ -29,3 +29,9 @@ bag.map(toInt).foreach(println)
 
 //by using flatMap, we get flattened results by eliminating the Null(None) values
 //o/p-> 123
+
+#Use zipWithIndex wen iteraing over a list nad in need of counter
+val days = Array("Sun", "Mon", "Tue")
+days.zipWithIndex.foreach {  case(day,count) => println(s"$count is $day")}
+days.zipWithIndex.foreach(println)
+//o/p-> (Sun,0)(Mon,1)(Tue,2)
