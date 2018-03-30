@@ -15,7 +15,7 @@ match1 match {
   case Some(s) => println(s"Found: $s")
   case None => println("found None")
 }
-match1.getOrElse(0)
+println(match1.getOrElse(0))
 
 //findAllIn returns an non-empty iterator and returns empty iterator in case of no match
 val matches = numpattern.findAllIn(address).toArray
