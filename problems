@@ -1,4 +1,4 @@
-# making a string to integer by using option
+// making a string to integer by using option
 def toInt(s: String) :Option[Int] ={
   try {
     Some(Integer.parseInt(s.trim))
@@ -6,11 +6,26 @@ def toInt(s: String) :Option[Int] ={
       case e: Exception => None    }
 }
 
-# list containing of strings
+val numpattern = "[0-9]+".r
+val address = "123 main street suite 101"
+val match1 = numpattern.findFirstIn(address)
+
+//returns option,(Some(value) and None in-case of no match)
+match1 match {
+  case Some(s) => println(s"Found: $s")
+  case None => println("found None")
+}
+match1.getOrElse(0)
+
+//findAllIn returns an non-empty iterator and returns empty iterator in case of no match
+val matches = numpattern.findAllIn(address).toArray
+//matches.foreach(println)
+
+// list containing of strings
 val bag = List("1","2","foo","3","bar")
 bag.map(toInt).foreach(println)
 
-#o/p->Some(1)Some(2)NoneSome(3)None
+//o/p->Some(1)Some(2)NoneSome(3)None
 
-#by using flatMap, we get flattened results by eliminating the Null(None) values
-#o/p-> 123
+//by using flatMap, we get flattened results by eliminating the Null(None) values
+//o/p-> 123
