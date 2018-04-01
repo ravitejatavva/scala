@@ -1,9 +1,17 @@
 <<<<<Description>>>>>
-//we have sorted,sortBy and sortWith functions to create customised ordering
+//we have sorted,sortBy and sortWith functions to sort
+
 1)sorted
+the rich versions of numeric classes(RichInt) and StringOps class all extend the Ordered trait so that we can use sorted method..
+
 2)sortBy
 sortBy has implicit parameter ord which provides ordering
+//the below sortby function generates elements with descending order
+
 def sortBy [B] (f: (A) ⇒ B)(implicit ord: Ordering[B]): List[A]
+implicit object Comp extends Ordering[Int] {
+override def compare (x: Int, y: Int): Int = y - x
+}
 
 3)sortWith
 we can create our own function and can be passed into sortWith
