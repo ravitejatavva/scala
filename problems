@@ -35,3 +35,27 @@ val days = Array("Sun", "Mon", "Tue")
 days.zipWithIndex.foreach {  case(day,count) => println(s"$count is $day")}
 days.zipWithIndex.foreach(println)
 //o/p-> (Sun,0)(Mon,1)(Tue,2)
+
+import scala.util.Random
+//apply function creates object with arguments and unapply function gives arguments from object
+object Customer {
+  def apply(name: String) = s"$name--${Random.nextLong}"
+  def unapply(customer: String): Option[String] = {
+    val name = customer.split("--").head
+    if(name.nonEmpty) Some(name) else None
+  }
+}
+
+val Customer1 = Customer("Ravi")
+val Customer2 = Customer("Teja")
+Customer1 match {
+  case Customer(s) => println(s"found: $s")
+  case _  => println("couldn't extract customer")
+}
+//o/p->found: Ravi
+val customers: List[String] = List(Customer1,Customer2)
+//customers:+Customer3
+customers.foreach(println)
+o/p->
+Ravi--4721392806383845516
+Teja--8338935503458781645
