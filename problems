@@ -35,7 +35,19 @@ val days = Array("Sun", "Mon", "Tue")
 days.zipWithIndex.foreach {  case(day,count) => println(s"$count is $day")}
 days.zipWithIndex.foreach(println)
 //o/p-> (Sun,0)(Mon,1)(Tue,2)
-
+#####
+def divideXByY(x : Int, y : Int) : Option[Int] = {  
+try{    
+  Some(x/y)
+   } catch {
+  case e: Exception => None
+   }
+ }
+divideXByY(1,0) match{
+  case Some(i) => println(s"found and is $i")
+  case None => println("Dude we can't divide")
+ }
+#####
 import scala.util.Random
 //apply function creates object with arguments and unapply function gives arguments from object
 object Customer {
