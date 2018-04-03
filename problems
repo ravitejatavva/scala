@@ -71,3 +71,22 @@ customers.foreach(println)
 o/p->
 Ravi--4721392806383845516
 Teja--8338935503458781645
+#######
+//Function with Option asone of its parameter,it gives efficient results than with default parameter for arguments
+//Here None is given as default parameter for Option
+//In the case of Some(coupon), we assume a database lookup for the discount that needs to be applied.But, in our example, we will assume the discount is 10%
+def itemTotalCost(itemName: String, itemQuantity: Int, couponCode: Option[String]=None): Double = {
+couponCode match {
+  case Some(coupon) =>
+  val discount = 0.1
+  val totalCost = 2.50 * itemQuantity * (1 - discount)
+  totalCost
+  case _ => 2.50 * itemQuantity
+  
+ }  
+}
+
+val howMuch = itemTotalCost("Donut",20,Some("12345"))
+println(s"please pay ${howMuch.toFloat}")
+o/p --> please pay 45 //for couponCode
+o/p --> please pay 50 // no coupon ..i.e., None is taken as default , so _ is taken @pattern match
