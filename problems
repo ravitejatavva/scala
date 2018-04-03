@@ -86,7 +86,8 @@ couponCode match {
  }  
 }
 
-val howMuch = itemTotalCost("Donut",20,Some("12345"))
+val howMuch = itemTotalCost("Donut",20,Some("12345")) // for coupon code
+val howmuch = itemTotalCost("Donut",20)
 println(s"please pay ${howMuch.toFloat}")
-o/p --> please pay 45 //for couponCode
-o/p --> please pay 50 // no coupon ..i.e., None is taken as default , so _ is taken @pattern match
+o/p1 --> please pay 45 //for couponCode
+o/p2 --> please pay 50 // no coupon ..i.e., None is taken as default , so _ is taken @pattern match
