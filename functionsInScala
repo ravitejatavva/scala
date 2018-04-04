@@ -22,6 +22,7 @@ println(s"please pay ${howMuch.toFloat})
 def itemTotalCost(itemName : String, itemQuantity : Int, couponCode : Option[String]= None)(implicit discount: Double,storeName: String): Double = {
   couponCode match {
     case Some(coupon) => 
+    // if we specify discount inside function, it is overridden!!
     //val discount = 0.1  //--> we can make it implicit so that we can get it from outside
     println(s"please pay for $itemQuantity $itemName to $storeName")
     val totalCost = 2.5 * itemQuantity * (1 - discount)
@@ -36,7 +37,7 @@ val howMuchhv2Pay = itemTotalCost("Donut", 50, dailyCouponCodeDb())
 println(s"please pay ${howMuchhv2Pay.toFloat}")
 
 
-
+//polymorphic function with generic types
 def applyDiscount[T](discount: T) : Seq[T] = {
   discount match {
     case s : String =>
@@ -56,15 +57,18 @@ println(s"Result of applyDiscount with String parameter = ${applyDiscount[Double
 
 
 ##########
+//function with variable arguments varargs* 
 def printReport(names : String*) = {
   println(s"Donut report = ${names.mkString(", ")}")
 }
 
 printReport("choc-donut","vanilla-donut","straw-donut")
 val donut_list : List[String] = List("choc-donut","vanilla-donut","straw-donut")
-printReport(donut_list:_*)
+printReport(donut_list:_*) // :_* --> needs to be specified when varargs* passed in form of List, Seq & Array otherwise compiler error!
+// :_* --> is called type ascription
 
 #################
+function with symbols, needs to be careful while defining and calling!!
 class donutCalculator {
   val totalCost = 100
   
