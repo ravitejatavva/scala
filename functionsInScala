@@ -19,6 +19,7 @@ val howMuch = itemTotalCost("Donut",20,dailyCouponCodeDb())
 println(s"please pay ${howMuch.toFloat})
 
 #######
+//implicit arguments passed to a function
 def itemTotalCost(itemName : String, itemQuantity : Int, couponCode : Option[String]= None)(implicit discount: Double,storeName: String): Double = {
   couponCode match {
     case Some(coupon) => 
@@ -82,6 +83,7 @@ println(doNutCalculator.---(10))
 
 
 #################
+//partial functions  they came from the concept of function currying 
 def totalCost(itemName: String)(itemQuantity: Int)(discount: Double): Double = {
   val totalcost = 2.5 * itemQuantity
   totalcost * (1 - discount)
