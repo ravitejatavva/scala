@@ -108,3 +108,9 @@ val howMuch = donutbounty("donut", 20){totalcost =>
  }
 println(s"total cost of 20 donuts with anonymous function is ${howMuch.toFloat}")
 
+//passing function as parameter to the higher order function
+def applydiscount(totalCost: Double) : Double = {
+  val discount = 2
+  totalCost * (1 - discount)
+}
+println(s"please pay ${totalCostWithDisc("chocDonut")(25)(applydiscount(_))}")
