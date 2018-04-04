@@ -1,0 +1,104 @@
+#################
+function that returns Option
+def dailyCouponCodeDb() : Option[String] = {
+  //db lookUp
+  val couponFromDB = "coupon1234"
+  Option(couponFromDB).filter(_.nonEmpty)
+}
+
+val couponLuck = dailyCouponCodeDb.getOrElse("Boss! No coupons Today. Better Luck next time")
+println(couponLuck)
+dailyCouponCodeDb() match {
+  case Some(couponCode) => println(s"Boss U got a coupon.. Here u Go ${couponCode.toFloat}")
+  case None => println("Boss! No coupons Today. Better Luck next time")
+}
+//If you are interested in valid values, then u can go with map/flatMap
+dailyCouponCodeDb().map(couponcode => println(s"Boss U got a coupon.. Here u Go ${couponcode.toFloat}"))
+
+val howMuch = itemTotalCost("Donut",20,dailyCouponCodeDb())
+println(s"please pay ${howMuch.toFloat})
+
+#######
+def itemTotalCost(itemName : String, itemQuantity : Int, couponCode : Option[String]= None)(implicit discount: Double,storeName: String): Double = {
+  couponCode match {
+    case Some(coupon) => 
+    //val discount = 0.1  //--> we can make it implicit so that we can get it from outside
+    println(s"please pay for $itemQuantity $itemName to $storeName")
+    val totalCost = 2.5 * itemQuantity * (1 - discount)
+    totalCost
+    case _ => 2.5 * itemQuantity
+  }
+}
+
+implicit val discount = 0.1
+implicit val storeName = "walmart"
+val howMuchhv2Pay = itemTotalCost("Donut", 50, dailyCouponCodeDb())
+println(s"please pay ${howMuchhv2Pay.toFloat}")
+
+
+
+def applyDiscount[T](discount: T) : Seq[T] = {
+  discount match {
+    case s : String =>
+    println(s"you got a discountcoupon ${discount} please apply and get discount")
+    Seq[T](discount)
+    
+    case d : Double =>
+    println(s" discount of ${discount}% applied")
+    Seq[T](discount)
+    
+    case d @ _  => println(" Unsupported-type function")
+    Seq[T](discount)
+  }
+}
+
+println(s"Result of applyDiscount with String parameter = ${applyDiscount[Double](3)}")
+
+
+##########
+def printReport(names : String*) = {
+  println(s"Donut report = ${names.mkString(", ")}")
+}
+
+printReport("choc-donut","vanilla-donut","straw-donut")
+val donut_list : List[String] = List("choc-donut","vanilla-donut","straw-donut")
+printReport(donut_list:_*)
+
+#################
+class donutCalculator {
+  val totalCost = 100
+  
+  def ---(discount: Double): Double = {
+    totalCost - discount
+  }
+}
+
+val doNutCalculator = new donutCalculator()
+println(doNutCalculator.---(10))
+
+
+#################
+def totalCost(itemName: String)(itemQuantity: Int)(discount: Double): Double = {
+  val totalcost = 2.5 * itemQuantity
+  totalcost * (1 - discount)
+}
+
+val gazeddounuts = totalCost("GazedDounts")_// this is a partial function got from a Curried function
+val gazeddountsWithQuantity = totalCost("GazedDounts")(20)_ //partial function got thru concept of function currying
+println(gazeddounuts) //o/p ---> <function1>
+println(gazeddountsWithQuantity) //o/p ---> <function1>
+println(s" gazed dounts cost is ${gazeddounuts(10)(0.1)}") //o/p  ---> gazed dounts cost is 22.5
+println(s" gazed dounts cost is ${gazeddountsWithQuantity(0.1)}") //o/p ---> gazed dounts cost is 22.5
+
+############function currying with anonymous function
+def donutbounty(itemName: String,itemQuantity : Int)(f: Double => Double): Double = {
+  val totalCost = 2.5 * itemQuantity
+  f(totalCost)
+}
+
+val howMuch = donutbounty("donut", 20){totalcost =>
+  val discount = 0.2 //Db lookUp
+  totalcost * (1 - discount)
+ }
+println(s"total cost of 20 donuts with anonymous function is ${howMuch.toFloat}")
+
