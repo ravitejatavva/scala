@@ -175,4 +175,74 @@ def printReportWithOptionCallback(sendEmailCallback: Option[() => Unit] = None) 
 }
 printReportWithOptionCallback()
 
+//Val functions inherit the andThen function and we will show how to use the andThen function to compose two functions together.
+•Ordering using andThen: f(x) andThen g(x) = g(f(x))
+•Ordering using compose: f(x) compose g(x) = f(g(x))
 
+//Mathematically speaking, f(x) andThen g(x) = g(f(x)). The results of the first function f(x) is ran first and will be passed as input to the second function g(x).
+
+
+val totalCost: Double = 10
+
+val applyTaxValFunction = (amount: Double) => {
+  println("Apply tax function")
+  val tax = 1 // fetch tax from database
+  amount + tax
+}
+
+
+val applyDiscountValFunction = (amount: Double) => {
+  println("Apply discount function")
+  val discount = 2 // fetch discount from database
+  amount - discount
+}
+println(s" ${((applyDiscountValFunction andThen applyTaxValFunction)(totalCost))}") // •Ordering using andThen: f(x) andThen g(x) = g(f(x))
+println(s" ${((applyDiscountValFunction compose applyTaxValFunction)(totalCost))}") •Ordering using compose: f(x) compose g(x) = f(g(x))
+
++++++++++++++++++++++++++++++++partial functions can be made using pattern matching+++++++++++++++++++++++++++++
+val donut = "Glazed Donut"
+
+val tasteLevel = donut match {
+  
+  case "Glazed Donut" | "Straw-Donut" => "very Taste"
+  
+  case "choc Donut " => "Yummy"
+  
+  case _ => " Tasty "
+}
+
+println(s" donut is $donut and it is ${tasteLevel} ")
+
+//•Note that we are using the PartialFunction trait
+//•In this example isVeryTasty takes an input of type String which is the donut and produces a String for the taste level. This is specified by PartialFunction[String, String]
+
+
+val isVeryTasty : PartialFunction[String,String] = {
+  
+  case "Glazed Donut" | "Straw-Donut" => "very Taste"
+}
+
+println(s"Calling partial function isVeryTasty = ${isVeryTasty("Glazed Donut")}")
+
+// Let's go ahead and use the orElse() function which is inherited from the PartialFunction trait and create another PartialFunction named donutTaste
+
+
+++++++++++++++++++++++++++++++++++++++++ nested Function ++++++++++++++++++++++++++++++++++++++++++++++
+def checkDonutAvailabilityWithNestedFunction(donutName: String): Boolean = {
+  // retrieve donut list that is currently in stock
+  val listDonutsFromStock = List[String]("Vanilla Donut", "Strawberry Donut", "Plain Donut", "Glazed Donut")
+
+  // validate the donutName parameter by some business logic
+  val validate = (name: String) => {
+    name.nonEmpty && name.length > 0
+  }
+
+  // first run validate and then check if we have a matching donut from our list
+  val isDonutInStock = validate(donutName) && (listDonutsFromStock contains donutName)
+
+  isDonutInStock
+}
+
+println(s" is that available ?? ${checkDonutAvailabilityWithNestedFunction("Vanilla Donut")}" )
+
+o/p --> is that available ?? true
