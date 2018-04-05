@@ -57,8 +57,7 @@ def applyDiscount[T](discount: T) : Seq[T] = {
 println(s"Result of applyDiscount with String parameter = ${applyDiscount[Double](3)}")
 
 
-##########
-//function with variable arguments varargs* 
++++++++++++++++++++++++++++++function with variable arguments(varargs*)++++++++++++++++++++++++
 def printReport(names : String*) = {
   println(s"Donut report = ${names.mkString(", ")}")
 }
@@ -68,7 +67,13 @@ val donut_list : List[String] = List("choc-donut","vanilla-donut","straw-donut")
 printReport(donut_list:_*) // :_* --> needs to be specified when varargs* passed in form of List, Seq & Array otherwise compiler error!
 // :_* --> is called type ascription
 
-#################
+
++++++++++++++++++++++++++++++++++++++++ args unpacking ++++++++++++++++++++++++++++++++++++++++++
+def sum(xs: Int*) = (0 /: xs) ((x, y) => x + y) --> 0 /: argument unpacking and with initialisation
+sum(1, 2, 3, 4)
+sum(List(1, 2, 3, 4): _*) --> compiler error //type ascription
+
++++++++++++++++++++++++++++++++++++++++ functionWithSymbols ++++++++++++++++++++++++++++++++++++++
 function with symbols, needs to be careful while defining and calling!!
 class donutCalculator {
   val totalCost = 100
@@ -82,8 +87,8 @@ val doNutCalculator = new donutCalculator()
 println(doNutCalculator.---(10))
 
 
-#################
-//partial functions  they came from the concept of function currying 
++++++++++++++++++++++++++++++++++++++++++ function currying +++++++++++++++++++++++++++++++++++++++++
+//partial functions they came from the concept of function currying 
 def totalCost(itemName: String)(itemQuantity: Int)(discount: Double): Double = {
   val totalcost = 2.5 * itemQuantity
   totalcost * (1 - discount)
@@ -96,7 +101,7 @@ println(gazeddountsWithQuantity) //o/p ---> <function1>
 println(s" gazed dounts cost is ${gazeddounuts(10)(0.1)}") //o/p  ---> gazed dounts cost is 22.5
 println(s" gazed dounts cost is ${gazeddountsWithQuantity(0.1)}") //o/p ---> gazed dounts cost is 22.5
 
-############function currying with anonymous function
+++++++++++++++++++++++++++++ function currying with anonymous function +++++++++++++++++++++++++++++++++
 def donutbounty(itemName: String,itemQuantity : Int)(f: Double => Double): Double = {
   val totalCost = 2.5 * itemQuantity
   f(totalCost)
@@ -114,3 +119,60 @@ def applydiscount(totalCost: Double) : Double = {
   totalCost * (1 - discount)
 }
 println(s"please pay ${totalCostWithDisc("chocDonut")(25)(applydiscount(_))}")
+
+******************************************************************************
+////call-by-name////
+//case class Order(ItemName: String, ItemQuantity: Int, ItemPrice: Double)
+
+val Orders  = List(("choc-Donut", 2 , "2.50"), ("vanilla-Donut", 5 , "1.50"), ("straw-Donut", 3 , "3.50"))
+def placeOrder(orders: List[(String, Int, Double)])(exchangeRate: Double) : Double = {
+  var totalCost = 0.0
+  orders.foreach {order =>
+// val costOfItem = order.ItemQuantity * order.ItemPrice * exchangeRate
+    val costOfItem = order._2 * order._3 * exchangeRate
+    println(" cost of ${order.2} ${order._1} is $costOfItem")
+    totalCost += costOfItem
+  }
+  totalCost
+}
+
+//val howMuch = placeOrder(Orders)(0.165)
+//println(s"please pay ${howMuch.toFloat} to cashier")
+//exchange rate shudn't be a hardcoded value and we need to pass function with call -by -name parameter
+println(s"Total cost of order = £${placeOrder(Orders)(0.5)}")
++++++++++++++++++++++++++++++higherOrderFunction(call-by-name)+++++++++++++++++++++++++++++++++
+import scala.util.Random
+//case class Order(ItemName: String, ItemQuantity: Int, ItemPrice: Double)
+val Orders  = List(("choc-Donut", 2 , "2.50"), ("vanilla-Donut", 5 , "1.50"), ("straw-Donut", 3 , "3.50"))
+def placeOrder(orders: List[(String, Int, Double)])(exchangeRate: => Double) : Double = {
+  var totalCost = 0.0
+  orders.foreach {order =>
+// val costOfItem = order.ItemQuantity * order.ItemPrice * exchangeRate
+    val costOfItem = order._2 * order._3 * exchangeRate
+    println(" cost of ${order.2} ${order._1} is $costOfItem")
+    totalCost += costOfItem
+  }
+  totalCost
+}
+exchange rate shudn't be a hardcoded value and we need to pass function with call -by -name parameter and is calculated based on stock value..
+val randomExchangeRate = new Random(10)
+def usdToGbp: Double = {
+  val rate = randomExchangeRate.nextDouble()
+  println(s"exchange rate for usdToGbp is $rate")
+  rate
+}
+
+println(s"please pay ${placeOrder(Orders)(usdToGbp)}")
+
+++++++++++++++++++++++++++++++++++++ functionWithCallbackParameter +++++++++++++++++++++++++++
+
+def printReportWithOptionCallback(sendEmailCallback: Option[() => Unit] = None) {
+  println("Printing report ... started")
+  // look up some data in database and create a report
+  println("Printing report ... finished")
+  sendEmailCallback.map(callback => callback())
+  
+}
+printReportWithOptionCallback()
+
+
