@@ -1,0 +1,133 @@
+-->>>>>>>>simple class<<<<<<<<<--
+
+•How to define a simple class to represent a Donut object
+•How to create instances of Donut class
+•How to call the print function for each of the donut object
+•How to access the properties of class Donut
+
+class Donut(name: String, productCode: Long) {
+  
+  def print = println(s" Donut name = $name and product code is $productCode") 
+}
+
+val glazedDonut = new Donut("Glazed", 1356515)
+val vanillaDonut = new Donut("vanilla", 213566)
+
+glazedDonut.print
+vanillaDonut.print
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-->>>>>>>>>>defining companion object<<<<<<<<<--
+
+--A Companion Object is defined using the object keyword and the name of the object should be identical to the class name.
+--In addition, the companion object should define an apply() method which will be responsible for instantiating an instance of the given class.
+
+
++define a simple class to represent a Donut object
++declare a companion object for the Donut class with the apply method inside,by specifying new keyword & returning object 
++create instances of the Donut class using the companion object
++call the print function for each of the donut object (Access the methods and properties of object)
+
+class Donut(name: String, productCode: Long) {
+  
+  def print = println(s" Donut name = $name and product code is $productCode") 
+}
+
+object Donut{
+  
+  def apply(name: String, productCode: Long): Donut = {
+    new Donut(name,productCode)
+  }
+  
+}
+
+val glazedDonut = Donut("Glazed", 1356515)
+val vanillaDonut = Donut("vanilla", 213566)
+
+glazedDonut.print
+vanillaDonut.print
+println(s"$glazedDonut.name")
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-<<<<<<<<<<<<<<<<Use Companion Objects' Apply Method() As A Factory (Class Hierarchy Via Inheritance)>>>>>>>>>>>>>>>
+formally a factory is a function or method that returns objects of a varying prototype or class[1] from some method call, which is assumed to be "new
+thru factoryPattern--apply() and pattern matching , we can achieve inheritance and hierarchy
+
++apply() method as a factory to return different class type hierarchies and class type hierachies are created by making use of inheritance using the extends keyword.
+
+•How to define a simple class to represent a Donut object
+•How to declare class hierarchy through inheritance using extends keyword
+•How to declare apply method of companion object as a factory
+•How to call apply method of companion object which is a factory
+
+
+class Donut(name: String, productCode: Option[Long] = None) {
+  
+  def print = println(s" Donut name = $name and product code is ${productCode.getOrElse(0)}") 
+}
+
+class glazedDonut(name: String) extends Donut(name: String)
+class vanillaDonut(name: String) extends Donut(name: String)
+
+object Donut{
+  
+  def apply(name:String, productCode: Option[Long] = None): Donut = {
+    
+    name match {
+      case "Glazed" => new glazedDonut(name)
+      case "vanilla-Donut" => new vanillaDonut(name)
+      case _ => new Donut(name,productCode)
+    }
+  }
+}
+
+val glazedDonut = Donut("Glazed")
+val vanillaDonut = Donut("vanilla-Donut")
+val chocDonut = Donut("choc",Some(456789))
+
+glazedDonut.print
+println(s"class of glazedDonut is ${glazedDonut.getClass}")
+vanillaDonut.print
+println(s"class of glazedDonut is ${vanillaDonut.getClass}")
+chocDonut.print
+println(s"$glazedDonut.name")
+
+-<<<<<<<<<<declaring values and fields inside companion objects>>>>>>>>>>>>>>>-
+private keyword would hide the visibility of the field uuid.
+given that a Companion Object works along side the class to which the Companion Object refers to, even though the uuid field is not visible to the outside world, it is still accessible within the Donut class
+
+•How to define a simple class to represent a Donut object
+•How to declare fields and values in Companion Object
+•How to create instances of the Donut class using the Companion Object
+•How to call function on each Donut object
+
+
+
+class Product(itemName: String, itemProductId: Option[Long]= None) {
+  
+  def print = println(s" item is ${itemName} and itemproductid is ${itemProductId.getOrElse(0)} , uuid is ${Product.uuid}")
+  
+}
+
+object Product {
+  
+  private val uuid = 1
+  
+  def apply(itemName: String, itemProductId: Option[Long]= None) :  Product = {
+    
+    new Product(itemName,itemProductId)
+  }
+  
+  def apply(itemName: String): Product = {
+    
+    new Product(itemName)
+    
+  }  
+  
+  
+}
+
+val glazedDonut = Product("glazedDonut", Some(5165))
+val soap = Product("Soap")
+
+glazedDonut.print
+soap.print
