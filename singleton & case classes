@@ -1,0 +1,108 @@
+-<<<<<<<<<<<<<<<<<<<<singleton Object>>>>>>>>>>>>>>>>>>>>>-
+
+The key idea in this pattern is to make the class itself responsible for controlling its instantiation (that it is instantiated only once).
+The hidden constructor (declared private) ensures that the class can never be instantiated from outside the class
+The public static operation can be accessed easily by using the class name and operation name (Singleton.getInstance()).
+
+ensure that only one instance of the singleton class ever exists; and
+provide global access to that instance.
+
+Typically, this is done by:
+declaring all constructors of the class to be private; and
+providing a static method that returns a reference to the instance
+
+
+•How to declare a Singleton Object
+•How to define a global field
+•How to define utility function
+•How to call global field
+•How to call the utility function or method
+
++the Singleton Pattern is a a fairly common design pattern when you need exactly one instance of an object.
++that Scala also has the keyword static which would allow you to declare global fields and constants.
++But, Scala does not have a static keyword! Instead, you can simply encapsulate a global field using the val keyword inside a Singleton Object.
++Scala does not exposed a static keyword. But you can encapsulate functions and methods inside a Singleton Object if you would like to expose some globally accessible utility function or method.
++static keyword in Java is equivalent to val keyword inside a Singleton Object.
+
+
+
+object shoppingCalculator {
+  
+  val discount = 0.1
+  def totalCost(itemName: List[String,Int,Float]): Double = {
+    // calculate Donut Costs
+    return 1
+  }
+}
+
+
+println(s" discount(global field/constant) is ${shoppingCalculator.discount}")
+println(s" total cost of items are ${shoppingCalculator.totalCost(List())}")
+
+
+-<<<<<<<<<<<<<<<<<<<<<<<<<<<< case Class >>>>>>>>>>>>>>>>>>>>>>-
+A case class is similar to any other classes except that it also creates the Companion Object. In addition, a case class will automatically create the apply(),
+ toString(), hashCode and equals() methods for you.
+
+•How to define a case class to represent an object
+•How to create instances or objects for a given case class
+•How to access fields on objects which are based on case class
+•How to modify or update fields on objects which are based on case class
+•How to define the hashCode and equals method for objects which are based on case class
+
+•A case class also comes with a handy copy() method which you can use to copy an object and override any field.
+ In return, the copy() method will create new instances of the given object.
+
+
+case class Product(itemName: String, itemPrice: Double, itemProductId: Option[Long] = None )
+
+val glazedDonut: Product = Product("Glazed-Donut",2.50)
+val chocDonut: Product = Product("choc-Donut",2.50,Some(165))
+val chocolateVanillaDonut: Product = glazedDonut.copy(itemName = "Chocolate And Vanilla Donut", itemPrice = 5.0)
+
+println(s"price of glazed-donut is ${glazedDonut.itemPrice}")
+println(s"productid of chocDonut is ${chocDonut.itemProductId}")
+
+val cart: Map[Product,Int] = Map(glazedDonut -> 4,chocDonut -> 5, chocolateVanillaDonut -> 9)
+val cartList : List[Product] = List(glazedDonut,chocDonut,chocolateVanillaDonut)
+
+println(s"all items in shopping cart is ${cart}")
+
+cartList.foreach(println)
+
+//val chocolateVanillaDonut: Product = glazedDonut.copy(itemName = "Chocolate And Vanilla Donut", itemPrice = 5.0)
+//chocolateVanillaDonut.foreach(println)
+
+
+-<<<<<<<<<<<<<<<<<<<<<<<<<<<<Type aliasing versus case class >>>>>>>>>>>>>>>>>>>>>>>>>>>>>-	
+
+•Use type aliasing when it helps make your code more clear regarding the domain objects you are dealing with.
+
+type CartItem = Tuple2[Product,Int]
+
+-<<<<<<<<<<<<<<< implicit class- extension methods >>>>>>>>>>>>>>>-
+
+•How to define a case class to represent a Donut object
+•How to create instances or objects for the Donut case class
+•How to define an implicit class to augment or extend the Donut object with a uuid field
+•How to import and use the implicit class AugmentedDonut from Step 3
+
+
++use Implicit Class to add methods to an object without modifying the source code of the object - also commonly known as extension methods
++With Implicit Class, you can easily extend the functionality of the Donut type.
++In the example below, we add a new method named uuid which returns a String and it uses the name and productCode of the Donut type to construct the unique id.
+
+
+case class Product(itemName: String, itemPrice: Double, itemProductId: Option[Long] = None)
+
+val soap: Product = Product("Fiama", 67.05)
+
+println(s" product is ${soap}")
+
+object ProductImplicits {
+  implicit class augmentedProduct(product: Product) {
+    def uuid : String = s"product.itemName - product.itemProductId"
+  }
+}
+
+import ProductImplicits._
