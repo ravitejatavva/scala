@@ -1,0 +1,87 @@
+-<<<<<<<<<<<<<<< implicit class- extension methods >>>>>>>>>>>>>>>-
+
+•How to define a case class to represent a Donut object
+•How to create instances or objects for the Donut case class
+•How to define an implicit class to augment or extend the Donut object with a uuid field
+•How to import and use the implicit class AugmentedDonut from Step 3
+
+'''
++This keyword makes the class’s primary constructor available for implicit conversions when the class is in scope.
+
++1. They must be defined inside of another trait/class/object.
+
+object Helpers {
+   implicit class RichInt(x: Int) // OK!
+}
+implicit class RichDouble(x: Double) // BAD
+
++2. They may only take one non-implicit argument in their constructor
+
+
+implicit class RichDate(date: java.util.Date) // OK!
+implicit class Indexer[T](collecton: Seq[T], index: Int) // BAD!
+implicit class Indexer[T](collecton: Seq[T])(implicit index: Index) // OK!
+
+
+While it’s possible to create an implicit class with more than one non-implicit argument, such classes aren’t used during implicit lookup.
+
+3. There may not be any method, member or object in scope with the same name as the implicit class.
+
+Note: This means an implicit class cannot be a case class.
+
+object Bar
+implicit class Bar(x: Int) // BAD!
+
+val x = 5
+implicit class x(y: Int) // BAD!
+
+implicit case class Baz(x: Int) // BAD!
+  
+
++use Implicit Class to add methods to an object without modifying the source code of the object - also commonly known as extension methods
++With Implicit Class, you can easily extend the functionality of the Donut type.
++In the example below, we add a new method named uuid which returns a String and it uses the name and productCode of the Donut type to construct the unique id.
+
+
+04/10/2018
+
+case class Product(itemName: String, itemPrice: Double, itemProductId: Option[Long] = None)
+
+val soap: Product = Product("Fiama", 67.05)
+
+println(s" product is ${soap}")
+
+object ProductImplicits {
+  implicit class augmentedProduct(product: Product) {
+    def uuid : String = s"product.itemName - product.itemProductId"
+  }
+}
+
+import ProductImplicits._
+
+println(s" the uuid for soap is ${soap.uuid}")
+
++•It's a good practice to encapsulate Implicit Classes into an object which can later be injected or referenced.
++Since we've wrapped and encapsulated the AugmentedProduct Implicit Class inside the ProductImplicits object,
+ to use the Implicit AugmentedProduct class you simply need to import it as shown below..
++•The Soap product object now has access the uuid method - also known as the extension method.
+
+***********************************************************************
+object Helpers {
+  implicit class intWithTimes(x: Int) {
+    def times[A](f: => A): Unit = {
+      def loop(current: Int): Unit =
+        if (current > 0) {
+          f
+          loop(current - 1)
+        }
+      loop(x)
+    }  
+  }
+}
+
+This example creates the implicit class IntWithTimes. This class wraps an Int value and provides a new method, times. To use this class, just import it into scope and call the times method. Here’s an example:
+
+import Helpers._
+5.times(println("HI"))
+5 times println("Hi")
