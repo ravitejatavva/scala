@@ -1,0 +1,17 @@
+*Notice how the console says we’ve defined a object, but it hasn’t run either of our println statements? 
+This is due to a quirk of Scala and Java called "lazy loading".
+
+*field gives a name to a value, whereas a 
+*method gives a name to a computation that produces a value.
+
+Objects and classes (which we’ll see later) aren’t loaded, until they are referenced by other code
+object Test7 {
+   val simpleField = {
+     println("Evaluating simpleField")
+     42
+   }
+   def noParameterMethod = {
+     println("Evaluating noParameterMethod")
+     42
+   }
+}
