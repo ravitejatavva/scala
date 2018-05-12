@@ -1,4 +1,3 @@
-
 *Notice how the console says we’ve defined a object, but it hasn’t run either of our println statements? 
 This is due to a quirk of Scala and Java called "lazy loading".
 
@@ -28,3 +27,6 @@ The body of a method, on the other hand, is evaluated every time we call the met
 Test7.noParameterMethod
 // Evaluating noParameterMethod
 // res: Int = 42
+
+*We have also seen the difference between methods and fields—fields refer to values stored within an object, 
+whereas methods refer to computations that produce values.
