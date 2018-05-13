@@ -1,0 +1,30 @@
+@scala.annotation.tailrec
+def factorial(fact: BigInt, n: BigInt) : BigInt = {
+  if(n == BigInt(1))
+    fact
+  else
+    1 * factorial(fact * n, n-1)
+}
+
+println(factorial(500))
+
+write as a recursive procedure
+and run it as a iterative process
+//procedure is code we write and process is the code that runs, and complier 
+uses git optimisation
+tail call optimisation
+
+
+SICP 
+recursive(write as a recursive procedure) --> iterative(run it as a process)
+
+#anonymous classes
+def createPerson() = {
+  new {
+    var first = "James"
+    var last = "Bond"
+  }
+}
+
+var double0Seven = createPerson()
+println(double0Seven)
