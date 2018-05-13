@@ -15,7 +15,7 @@ uses git optimisation
 tail call optimisation
 
 
-SICP 
+SICP --> structured and iterative programming
 recursive(write as a recursive procedure) --> iterative(run it as a process)
 
 #anonymous classes
