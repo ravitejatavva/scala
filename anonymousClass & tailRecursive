@@ -55,3 +55,23 @@ def talkTo(frnd: friend) = frnd.listen
 
 talkTo(sam)
 talkTo(buddy)
+
+abstract class Writer {
+  def write(msg: String)
+}
+
+class StringWriter extends Writer {
+  val target = new StringBuilder
+  override def write(msg: String) ={
+    target.append(msg)
+  }
+  override def toString = target.toString
+}
+
+def writeStuff(writer : Writer) {
+  writer.write("hey this is a new string writer\nthis is super cool")
+  println(writer)
+}
+
+
+writeStuff(new StringWriter)
