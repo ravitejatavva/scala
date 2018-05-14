@@ -11,11 +11,19 @@ class Human(val name: String) extends Friend
 class Animal(val name: String)
 
 class Dog(override val name: String) extends Animal(name) with Friend
+class Cat(override val name: String) extends Animal(name)
 
 def seekHelpFrom(friend: Friend) = friend.listen
 
 val sam = new Human(" Sam ")
 seekHelpFrom(sam)
 
-val buddy = new Human(" Buddy ")
+val buddy = new Dog(" Buddy ")
 seekHelpFrom(buddy)
+
+val alf = new Cat(" Alf ")
+seekHelpFrom(alf)
+
+val rebecca = new Cat("Rebecca") with Friend
+seekHelpFrom(rebecca)
+println(rebecca.getClass)
