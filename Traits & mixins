@@ -6,11 +6,15 @@ trait Friend{
   def listen() = println(s"I'm $name listening...")
 }
 
+trait Curious {
+  def pokeAround() = { println(s"..curious...") }
+}
+
 class Human(val name: String) extends Friend
 
 class Animal(val name: String)
 
-class Dog(override val name: String) extends Animal(name) with Friend
+class Dog(override val name: String) extends Animal(name) with Friend with Curious
 class Cat(override val name: String) extends Animal(name)
 
 def seekHelpFrom(friend: Friend) = friend.listen
@@ -28,3 +32,4 @@ seekHelpFrom(alf)
 val rebecca = new Cat("Rebecca") with Friend
 seekHelpFrom(rebecca)
 println(rebecca.getClass)
+buddy.pokeAround
