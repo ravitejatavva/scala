@@ -33,3 +33,8 @@ val rebecca = new Cat("Rebecca") with Friend
 seekHelpFrom(rebecca)
 println(rebecca.getClass)
 buddy.pokeAround
+
+
+//What happens if we have common methods in multiple traits.. instead of colliding in case of class.. 
+what if want to collaborate with traits.. isn't it interesting??
+
