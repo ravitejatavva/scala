@@ -22,6 +22,8 @@ def seekHelpFrom(friend: Friend) = friend.listen
 val sam = new Human(" Sam ")
 seekHelpFrom(sam)
 
+//javap Friend.class
+
 val buddy = new Dog(" Buddy ")
 seekHelpFrom(buddy)
 
