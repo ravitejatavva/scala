@@ -91,3 +91,7 @@ This is s******
 THIS IS STUPID
 THIS IS S******
 THIS IS STUPID
+
+//////////////////////////////////////////////////////////////////////////////////////////
+traits are compile time mixins 
+mixins are run time mixins
