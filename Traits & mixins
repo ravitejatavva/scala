@@ -1,5 +1,7 @@
 //trait are like by one and get one offer
 //if you use a trait.. u get a interface and abstract class rightway..
+//trait is a combination of interface and abstract base class. where interface implementations happen and delegations.
+//trait provides chainability, is nothing but decorator pattern.
 
 trait Friend {
   val name: String
