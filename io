@@ -47,4 +47,71 @@ object TreeOps {
   }
 }
 
+******************************************************************************************************
+/*final case class Box[A](value: A)
+println(Box(2).value)
+println(Box("hi").value)
+
+def generic[A](in: A) : A = in
+
+println(generic("hey Boss"))
+println(generic(1))
+
+sealed trait LinkedList[A] {
+  def length: Int = 
+    this match {
+      case End() => 0
+      case Pair(head,tail) => 1 + tail.length
+    }
+  def contains(item: A): Boolean = 
+    this match {
+      case End() => false
+      case Pair(head,tail) => 
+        if(head == item)
+          true
+        else
+        tail.contains(item)
+    }
+  def apply(index: Int): A = 
+    this match {
+      case Pair(head,tail) => 
+        if (index ==0)
+          head
+        else 
+          tail(index-1)
+      case End() => 
+        throw new Exception("Attempted to  get element from empty list")
+    }
+}
+final case class End[A]() extends LinkedList[A]
+final case class Pair[A](head: A, tail: LinkedList[A]) extends LinkedList[A]
+
+val  example =  Pair(1, Pair(2, Pair(3, End())))
+println(example.length)
+println(example.contains(1))
+println(example(1))
+
+sealed trait Result[A]
+final case class Success[A](result: A) extends Result[A]
+final case class Failure[A](reason: String) extends Result[A]
+
+sealed trait LinkedList[A] {
+  def apply(index: Int): A = 
+    this match {
+      case Pair(head,tail) =>
+        if (index ==0)
+          Success(head)
+        else 
+          tail(index-1)
+      case End() =>
+        throw new Exception("index out of Bounds")
+    }
+}
+
+val sayHi = () => "Hi"
+println(sayHi())
+*/
+case class Pair[A,B](one: A, two: B)
+val pair =  Pair("hi",1)
+println(pair.one,pair.two)
 
