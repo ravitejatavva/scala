@@ -85,3 +85,55 @@ This example creates the implicit class IntWithTimes. This class wraps an Int va
 import Helpers._
 5.times(println("HI"))
 5 times println("Hi")
+*************************************************************************************************************
+def numberOfVowels(str: String): Int = {
+  str.filter(Seq('a','e','i','o','u').contains(_)).length
+}
+
+println(numberOfVowels("a quick brown fox"))
+
+val str1 = s"Doom's day"
+val list1 = str1.toList
+println(list1)
+
+implicit class ExtraStringMethod(str: String) {
+      val vowels = Seq('a','e','i','o','u')
+      def numberOfVowel = 
+      str.toList.filter(vowels.contains(_)).length
+}
+
+println("a quick brown fox is a prince of azkaban".numberOfVowel)
+/*
+trait IntWriter[A] {
+  def write(in: A): String
+}
+
+object PositiveWriter extends IntWriter[Int] {
+  def write(in: Int): String = {
+    in*yeah
+  } 
+}
+object NegativeWriter extends IntWriter[Int] {
+  def write(in: Int): Unit
+}
+object IntsImplicits {
+  implicit class IntImplicit[A](data: A) {
+    def yeah(implicit writer: IntWriter[A])
+      writer.write(data)
+  }
+}
+*/
+for (_ <- 1 to -10) {
+  println("oh yeah")  
+}
+object IntImplicits {
+  implicit class IntOps(int: Int) {
+    def yeah = for(_ <- 1 to int) {
+      println("Oh Yeah")
+    } 
+  }
+}
+
+import IntImplicits._
+2.yeah /* "prints Oh Yeah"s */
+-3.yeah /* remains silent*/
