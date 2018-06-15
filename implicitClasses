@@ -85,6 +85,19 @@ This example creates the implicit class IntWithTimes. This class wraps an Int va
 import Helpers._
 5.times(println("HI"))
 5 times println("Hi")
+object IntImplicit {
+  implicit class IntOps(n: Int) {
+     def yeah = times(_ => println("Oh yeah"))
+     def times(f: Int => Unit) {
+      for(i <- 1 to n) {
+        f(i)
+      }
+     }
+  }
+}
+import IntImplicit._
+5.times(a => println(s"Look its the number $a"))
+5.yeah
 *************************************************************************************************************
 def numberOfVowels(str: String): Int = {
   str.filter(Seq('a','e','i','o','u').contains(_)).length
