@@ -21,3 +21,40 @@ def cross(count: Int): Image = {
      | }
      
      
+Sierpinski triangle...
+ def sierpinski(count: Int): Image = {
+     |   val triangle = Image.triangle(10,10) lineColor Color.magenta
+     |   count match {
+     |     case 0 => triangle above (triangle beside triangle)
+     |     case n =>
+     |       val unit = sierpinski(n-1)
+     |       unit above (unit beside unit)
+     |   }
+     | }
+
+
+identity element using structural recursion...
+ def identity(n: Int): Int = {
+     |   n match {
+     |     case 0 => 0
+     |     case n => 1 + identity(n-1)
+     |   }
+     | }
+
+double the same element using structural recursion...
+ def double(n: Int): Int = {
+     |   n match {
+     |    case 0 => 0
+     |    case n => 2 + double(n-1)
+     |   }
+     | }
+
+Growing Boxes...
+ def growingSize(n: Int): Image = {
+     |   n match {
+     |     case 0 => Image.Empty
+     |     case n => growingSize(n-1) beside Image.rectangle(n*10,n*10)
+     |   }
+     | }
+
+
