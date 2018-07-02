@@ -1,0 +1,23 @@
+**Pattern Natural Numbers**
+def chessBoard(count: Int): Image = {
+     |   val blackSquare = Image.rectangle(10,10).fillColor(Color.black)
+     |   val redSquare = Image.rectangle(10,10).fillColor(Color.red)
+     |   val base = (redSquare beside blackSquare) above (blackSquare beside redSquare)
+     |   count match {
+     |     case 0 => base
+     |     case n =>
+     |       val unit = chessBoard(n-1)
+     |       (unit beside unit) above (unit beside unit)
+     |   }
+     | }
+
+CrossCircles...
+def cross(count: Int): Image = {
+     |     val unit= Image.circle(20)
+     |     count match {
+     |       case 0 => unit
+     |       case n => unit beside ( unit above cross(n-1) above unit ) beside unit
+     |     }
+     | }
+     
+     
