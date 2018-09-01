@@ -14,3 +14,97 @@ def shaggy: Unit = {
   }
   shaggy//isn't a pure function and create a new file at specified location
   
+  in the following cases, function isn't pure
+//Reassigning a variable
+//Modifying a data structure in place
+//Setting a field on an object
+//Throwing an exception or halting with an error Printing to the console or reading user input Reading from or writing to a file
+//Drawing on the screen
+
+
+****Strings****
+1.)
+"ray rice".filter(_ != 'r')
+The filter method removes all characters that are not equal to 'r'.
+
+The filter method above uses the shortcut _ syntax, but the explicit syntax can be used as well.
+
+"ray rice".filter((c: Char) => c != 'r')
+
+"batmanstein".drop(3).take(3).capitalize //Man
+
+2.)
+val s1 = "Homer"
+val s2 = "Ho" + "mer"
+s1 == s2
+true is returned.
+
+s1 and s2 are different String instances, but they have the same characters, with the same case, in the same order,
+so the Scala == operator considers them equal
+
+3.)
+null == true //
+false is returned.
+
+In Java, this code raises a pesky NullPointerException. 
+With Scala, you should never use null values and should always use Option instead.
+
+4.)
+val person1 = null
+val person2 = "frank"
+person1.toUpperCase == person2.toUpperCase
+
+This code raises a NullPointerExeption. The toUpperCase method is defined for string object, but null is not a string.
+null should not be used in Scala code, so you don't have to deal with annoying NullPointerExceptions.
+
+5.)
+val animals = "dog, cat, pig"
+The string can be split into an array with the split and map methods.
+
+animals.split(",").map(_.trim)
+The string can also be split with an intelligent use of the split method.
+
+animals.split(", ")
+
+6.)
+Assign the variable mood to the String "happy" and use it to create the string "I am happy".
+
+var mood = "happy"
+s"I am $mood"
+
+7.)
+Set the variable usDrinkingAge to the Integer 21 and use it to create the String "The drinking age in Canada is 18".
+
+String interpolation is used with curly braces {} to generate the desired string.
+
+var usDrinkingAge = 21
+s"The drinking age in Canada is ${usDrinkingAge - 3}"
+
+8.)
+Capitalize ever letter in the string "like dessert".
+The String toUpperCase method can be used to capitalize ever letter in a string.
+
+"like dessert".toUpperCase
+The map method can be used to iterate over every character in the string and the toUpper method can be used to uppercase a 
+single character.
+
+"like dessert".map(_.toUpper)
+
+9.)
+Use a regular expression to parse out the number from the following string: "Milton Friedman died at 94 years of age."
+val s = "Milton Friedman died at 94 years of age."
+val regex = "[0-9]+".r
+regex.findFirstIn(s)
+The regex val is assigned to an instance of scala.util.matching.Regex. This is shorthand notation for making an instance of the class.
+
+The findFirstIn method returns Option[String] = Some(94).
+Scala libraries return Option[String] instead of null to avoid annoying NullPointerException errors.
+
+Replace all the numbers in the following String (888) 333-4444 with "x". The result should be (xxx) xxx-xxxx.
+
+The replaceAll method is used to replace all the numbers in the string with "x".
+
+val s = "(888) 333-4444"
+s.replaceAll("[0-9]", "x")
+
+
