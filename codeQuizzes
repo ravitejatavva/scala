@@ -1,0 +1,16 @@
+Generally,Strings are immutable, incase of mutability, StringBuilder helps!
+
+var word = new StringBuilder("Beach")
+def funify: String = {
+  word.append("Fun!").toString
+}
+funify//isn't a pure function
+
+import java.io._
+def shaggy: Unit = {
+  val path = s"${System.getProperty("user.home")}/Desktop/mr_lover.txt"
+  val  file = new File(path)
+  file.createNewFile();
+  }
+  shaggy//isn't a pure function and create a new file at specified location
+  
