@@ -1,0 +1,60 @@
+linear recursive function, that calculates sum of two variables for a function f
+def sum(f: Int => Int, a: Int, b: Int): Int = {
+     |   if(a>b) 0
+     |   else f(a) + sum(f,a+1,b)
+     | }
+sum: (f: Int => Int, a: Int, b: Int)Int
+
+for ex: def sumInts(a: Int, b: Int) = sum(x => x,a,b)
+        def sumCubes(a: Int, b: Int) = sum(x => x*x*x,a,b)
+        
+As, we are passing the same parameters a,b to sum fn from sumInts,sumCubes.... 
+there is a redundancy of code...how can we overcome that???????
+
+sum fn returns another fn by applying function f
+def sum(f: Int => Int): (Int,Int) => Int = {
+     |   def sumF(a:Int, b: Int): Int = {
+     |     if(a > b) 0
+     |     else f(a) + sumF(a+1,b)
+     |   }
+     |  sumF
+     | }
+sum: (f: Int => Int)(Int, Int) => Int
+
+>>>  def sumInts = sum(x => x)
+sumInts: (Int, Int) => Int
+
+scala> sumInts(3,5)
+res0: Int = 12
+
+We do have similar constructs in scala, which is called fn currying
+def product(f: Int => Int)(a: Int,b: Int): Int = {
+     |   if(a > b) 1
+     |   else f(a) * product(f)(a+1,b)
+     | }
+product: (f: Int => Int)(a: Int, b: Int)Int
+
+resultType of Product becomes fn type of prod type
+
+def prod = product(x=>x)(_,_)
+prod: (Int, Int) => Int
+
+Factorial in terms of product..isn't that interesting... oh ya!!!!!!
+def fact(n: Int) = product(x=>x)(1,n)
+fact: (n: Int)Int
+
+Can we generalize code for sum and product as well...?? Here u go!!!!
+******************************        MAP     REDUCE        ************************************
+def mapReduce(f: Int => Int)(combine: (Int,Int) => Int, zero: Int)(a: Int,b: Int): Int = {
+     |    if(a>b) zero
+     |    else combine(f(a),mapReduce(f)(combine,zero)(a+1,b))
+     | }
+mapReduce: (f: Int => Int)(combine: (Int, Int) => Int, zero: Int)(a: Int, b: Int)Int
+
+def sum_reduce = mapReduce(x =>x)((x: Int,y: Int) => x+y,0)(_,_)
+sum_reduce: (Int, Int) => Int
+
+product in terms of mapReduce..how can we do that...............????????
+
+def product(f: Int => Int)(a: Int,b: Int): Int = mapReduce(f)((x,y) => x*y,1)(a,b)
+product: (f: Int => Int)(a: Int, b: Int)Int
