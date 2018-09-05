@@ -107,4 +107,30 @@ The replaceAll method is used to replace all the numbers in the string with "x".
 val s = "(888) 333-4444"
 s.replaceAll("[0-9]", "x")
 
+def m(x: Int, y: Int): Int = {
+  if(x>y) x else y
+}
+var max  = m _
+println(max(99,101))
+   
+def triple(x: Int): Int = x * 3
+val tripleCopy: (Int) => Int = triple
+println(tripleCopy(5))
 
+Refactor the following code to use Option instead of null.
+
+def makeFun(word: String): String = {
+  if (word == null) {
+    "I like fun!"
+  } else {
+    s"$word is fun"
+  }
+}
+
+def makeFunner(word: String): String = {
+  Option(word).getOrElse(return "I like fun!")
+  s"$word is fun"
+}
+
+makeFunner("paint") // "paint is fun"
+makeFunner(null) // "I like fun!
