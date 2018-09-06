@@ -58,3 +58,33 @@ product in terms of mapReduce..how can we do that...............????????
 
 def product(f: Int => Int)(a: Int,b: Int): Int = mapReduce(f)((x,y) => x*y,1)(a,b)
 product: (f: Int => Int)(a: Int, b: Int)Int
+********************************* Reduce ************************************
+def re(combine: (Int,Int)=>  Int, zero: Int)(a: Int,b: Int): Int = {
+     |    if(a>b) zero
+     |    else combine(a,re(combine,zero)(a+1,b))
+     | }
+re: (combine: (Int, Int) => Int, zero: Int)(a: Int, b: Int)Int
+
+scala> re((x,y) => x+y,0)(1,5)
+res17: Int = 15
+
+mappreduce is defined, reduce is defined and what about fold dude...??? how are going to acheive this???????
+def fo(zero: Int)(combine: (Int,Int) => Int)(a: Int,b: Int): Int = {
+     |   if(a>b) zero
+     |   else combine(a,fo(zero)(combine)(a+1,b))
+     | }
+fo: (zero: Int)(combine: (Int, Int) => Int)(a: Int, b: Int)Int
+
+scala> fo(0)((x,y) => x+y)(1,5)
+res18: Int = 15
+
+factorial interms of fold....heheheheh......gotcha...:p
+
+def fact(n: Int) = fo(1)((x,y) => x*y)(1,n)
+fact: (n: Int)Int
+
+val fact_of_10 = fact(5)
+fact_of_10: Int = 120
+
+
+
