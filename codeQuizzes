@@ -134,3 +134,28 @@ def makeFunner(word: String): String = {
 
 makeFunner("paint") // "paint is fun"
 makeFunner(null) // "I like fun!
+
+class Tree {
+  def about = "I am made of wood"
+}
+
+class Pine extends Tree {
+  override def about = super.about + " and sticky!"
+}
+
+var aPine = new Pine
+println(aPine.about)
+I am made of wood and Sticky!
+uper.about refers to the about method in the parent class. 
+The string "and sticky!" is appended to the about method of the parent class.
+
+class Star {
+  def apply() = {
+    "shining"
+  }
+}
+The apply method is special and is called by default if the method name is not specified. 
+c() also returns "floating" because the apply method is automatically used if no method name is specified. 
+The apply method is the only method with this special behavior.
+var s = new Star
+println(s()) // println(s.apply())
