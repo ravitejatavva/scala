@@ -86,5 +86,18 @@ fact: (n: Int)Int
 val fact_of_10 = fact(5)
 fact_of_10: Int = 120
 
+I came a long a way to gv u feast..:D.. isn't your appettite full.. Strong No!!...:D brought agg to our bag!!!
+
+scala> def ag(zero: Int)(combOps: (Int,Int) => Int)(reduceOps: (Int,Int) => Int)(a: Int,b: Int): Int = {
+     |   if(a>b) zero
+     |   else combOps(a, ag(zero)(combOps)(reduceOps)(a+1,b))
+     | }
+ag: (zero: Int)(combOps: (Int, Int) => Int)(reduceOps: (Int, Int) => Int)(a: Int, b: Int)Int
+
+scala> ag(0)((a,b) => a+b)((a,b) => if(a>b) a else b)(1,10)
+res2: Int = 55
+
+scala> ag(100)((a,b) => a+b)((a,b) => if(a>b) a else b)(1,10)
+res3: Int = 155
 
 
