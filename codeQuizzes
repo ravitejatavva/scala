@@ -159,3 +159,40 @@ c() also returns "floating" because the apply method is automatically used if no
 The apply method is the only method with this special behavior.
 var s = new Star
 println(s()) // println(s.apply())
+
+**********Implicit classes**************
+This code errors out because "implicit classes must accept exactly one primary constructor parameter".
+The joke parameter that was added to the Funny implicit class is causing the code to error out.
+
+This code works.
+
+object DoubleUtils {
+  implicit class Funny(val num: Double) {
+    def knockKnock = {
+      s"${num.toString} is here"
+    }
+  }
+}
+
+import DoubleUtils._
+println(3.14.knockKnock)
+
+When we call these functions without arguments the compiler searches for a value for the function in the context of the method call.
+The compiler finds a implicit value for a string type and uses the string "confused".
+When a method is called with an argument, the argument value is used.
+object Omg {
+  def speak(implicit emotion: String) = {
+    println(s"Pikachu is $emotion")
+  }
+}
+
+implicit val abcdefg = "confused"
+
+Omg.speak
+
+def evil(implicit scared: String) = {
+  println(s"Scala is $scared")
+}
+
+evil
+evil("cool")
