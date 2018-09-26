@@ -1,0 +1,45 @@
+scala> val df1 = sqlContext.read.format("csv").option("inferSchema","true").option("header","true").option("delimiter"," ").load("file:///home/cloudera/sale.csv")
+df1: org.apache.spark.sql.DataFrame = [PRODUCT: string, SALE_DATE: string, AMOUNT: int]
+
+scala> df1.show
++-------+----------+------+
+|PRODUCT| SALE_DATE|AMOUNT|
++-------+----------+------+
+|     TV|2016-11-27|   800|
+|     TV|2016-11-28|   900|
+|     TV|2016-11-29|   500|
+| FRIDGE|2016-10-11|   760|
+| FRIDGE|2016-10-13|   400|
+|     TV|2016-11-27|   700|
+| FRIDGE|2016-11-28|  1000|
+| COOLER|2016-11-29|   600|
+| COOLER|2016-10-13|   900|
+|    FAN|2016-10-11|   250|
+|  LIGHT|2016-10-11|   200|
++-------+----------+------+
+
+
+scala> val df2 = df1.groupBy("PRODUCT").pivot("SALE_DATE").agg(sum("AMOUNT") as "revenue")
+df2: org.apache.spark.sql.DataFrame = [PRODUCT: string, 2016-10-11: bigint, 2016-10-13: bigint, 2016-11-27: bigint, 2016-11-28: bigint, 2016-11-29: bigint]
+
+scala> df2.show
++-------+----------+----------+----------+----------+----------+                
+|PRODUCT|2016-10-11|2016-10-13|2016-11-27|2016-11-28|2016-11-29|
++-------+----------+----------+----------+----------+----------+
+|  LIGHT|       200|      null|      null|      null|      null|
+| FRIDGE|       760|       400|      null|      1000|      null|
+|     TV|      null|      null|      1500|       900|       500|
+|    FAN|       250|      null|      null|      null|      null|
+| COOLER|      null|       900|      null|      null|       600|
++-------+----------+----------+----------+----------+----------+
+
+
+scala> val df3 = df2.drop("PRODUCT").na.fill(0)
+df3: org.apache.spark.sql.DataFrame = [2016-10-11: bigint, 2016-10-13: bigint, 2016-11-27: bigint, 2016-11-28: bigint, 2016-11-29: bigint]
+
+scala> df3.groupBy().sum().show
++---------------+---------------+---------------+---------------+---------------+
+|sum(2016-10-11)|sum(2016-10-13)|sum(2016-11-27)|sum(2016-11-28)|sum(2016-11-29)|
++---------------+---------------+---------------+---------------+---------------+
+|           1210|           1300|           1500|           1900|           1100|
++---------------+---------------+---------------+---------------+---------------+
