@@ -1,0 +1,36 @@
+package com.scala.learning
+
+import scala.io.Source._
+object Sapien {
+  def main(args: Array[String]) {
+     //reading from a file
+    val file = scala.io.Source.fromFile("C:\\Users\\Arun\\Desktop\\Sapien.txt")
+    val lines = file.getLines.toList
+    lines.foreach(println)
+    val l1 = lines.map(x => x.split(","))
+    val l2 = l1.map(x => (x(0), x(1).toString.toInt, x(2)))
+
+    // a function to remove duplicates based on specific column
+
+    def removeDuplicates(xs: List[Tuple3[String, Int, String]]): List[Tuple3[String, Int, String]] = {
+      if(xs.isEmpty) xs
+      else
+        xs.head :: removeDuplicates(xs.tail.filter(x => (x._1 != xs.head._1) && (x._2 != xs.head._2)))
+    }
+
+    println("""******************************""")
+
+    val result1 = removeDuplicates(l2)
+    result1.foreach(println)
+
+    println("""************ OR ******************""")
+
+    val result = removeDuplicates(List(("Rajesh", 21, "London"),
+                                       ("Suresh", 28, "California"),
+                                       ("Rajesh", 21, "Gurgaon"),
+                                       ("Sam", 26, "Delhi"),
+                                       ("manish", 29, "Bengaluru")))
+    result.foreach(println)
+
+  }
+}
