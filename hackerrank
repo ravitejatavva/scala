@@ -1,0 +1,57 @@
+import java.io._
+import java.math._
+import java.security._
+import java.text._
+import java.util._
+import java.util.concurrent._
+import java.util.function._
+import java.util.regex._
+import java.util.stream._
+import scala.collection.immutable._
+import scala.collection.mutable._
+import scala.collection.concurrent._
+import scala.collection.parallel.immutable._
+import scala.collection.parallel.mutable._
+import scala.concurrent._
+import scala.io._
+import scala.math._
+import scala.sys._
+import scala.util.matching._
+import scala.reflect._
+
+object Solution {
+
+
+
+    // Complete the findNumber function below.
+    def findNumber(arr: Array[Int], k: Int): String = {
+        if (arr.contains(k)) "Yes" else "No"
+        
+        /*for (i <- 0 until arr.length) {
+            if (arr(i) == k) "Yes" else "No"
+        }*/
+    }
+
+    
+
+    def main(args: Array[String]) {
+        val printWriter = new PrintWriter(sys.env("OUTPUT_PATH"))
+
+        val arrCount = StdIn.readLine.trim.toInt
+
+        val arr = Array.ofDim[Int](arrCount)
+
+        for (i <- 0 until arrCount) {
+            val arrItem = StdIn.readLine.trim.toInt
+            arr(i) = arrItem
+        }
+
+        val k = StdIn.readLine.trim.toInt
+
+        val res = findNumber(arr, k)
+
+        printWriter.println(res)
+
+        printWriter.close()
+    }
+}
